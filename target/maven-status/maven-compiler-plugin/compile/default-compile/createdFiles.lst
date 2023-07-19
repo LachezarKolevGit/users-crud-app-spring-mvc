@@ -1,0 +1,5 @@
+SpringApplication.class
+bg\proxiad\demo\service\UserManagementService.class
+bg\proxiad\demo\controller\UserManagementController.class
+bg\proxiad\demo\model\User.class
+bg\proxiad\demo\config\Config.class
