@@ -6,11 +6,12 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import bg.proxiad.demo.exceptions.UserNotFoundException;
+import bg.proxiad.demo.model.Address;
 import bg.proxiad.demo.model.User;
 
 public class UserManagementServiceTest {
 
-  private final UserManagementService userManagementService = new UserManagementService();
+  private final UserManagementServiceImpl userManagementService = new UserManagementServiceImpl();
 
   @Test
   @DisplayName("Test .getUsers() for returning correct users")
@@ -25,9 +26,9 @@ public class UserManagementServiceTest {
             Map.entry(user2.getId(), user2),
             Map.entry(user3.getId(), user3));
 
-    userManagementService.addUser(user1);
-    userManagementService.addUser(user2);
-    userManagementService.addUser(user3);
+    userManagementService.addUser(user1, user1.getId());
+    userManagementService.addUser(user2, user2.getId());
+    userManagementService.addUser(user3, user3.getId());
 
     Map<Long, User> actualMap = userManagementService.getUsers();
 
@@ -42,7 +43,7 @@ public class UserManagementServiceTest {
     User expectedUser = new User("Georgi");
     Long expectedUserId = expectedUser.getId();
 
-    userManagementService.addUser(expectedUser);
+    userManagementService.addUser(expectedUser, expectedUserId);
     Map<Long, User> users = userManagementService.getUsers();
     User actualUser = users.get(expectedUserId);
 
@@ -56,7 +57,7 @@ public class UserManagementServiceTest {
   @DisplayName("Test deleting a user in .deleteUser() method")
   void testRemovingUser() {
     User newUser = new User("Georgi");
-    userManagementService.addUser(newUser);
+    userManagementService.addUser(newUser, newUser.getId());
 
     userManagementService.deleteUser(newUser.getId());
     Map<Long, User> users = userManagementService.getUsers();
@@ -68,11 +69,12 @@ public class UserManagementServiceTest {
   @Test
   @DisplayName("Test modifying saved user in .modifyUser() method")
   void testModifyingUser() {
-    User expectedUser = new User(1L, "Georgi");
-    userManagementService.addUser(expectedUser);
+    Address address = new Address("Vitoshka", 5);
+    User expectedUser = new User(1L, "Georgi", 22, address);
+    userManagementService.addUser(expectedUser, expectedUser.getId());
 
     expectedUser.setName("Petko");
-    userManagementService.modifyUser(expectedUser);
+    userManagementService.modifyUser(expectedUser, expectedUser.getId());
     Map<Long, User> users = userManagementService.getUsers();
     User actualUser = users.get(expectedUser.getId());
 
@@ -104,7 +106,7 @@ public class UserManagementServiceTest {
   void testModifyUserPassingNullAsArgument() {
     assertThatThrownBy(
             () -> {
-              userManagementService.modifyUser(null);
+              userManagementService.modifyUser(null, 1L);
             })
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("User can't be null");
@@ -115,8 +117,10 @@ public class UserManagementServiceTest {
   void testModifyUserWithInvalidId() {
     assertThatThrownBy(
             () -> {
-              User user = new User(100L, "Georgi");
-              userManagementService.modifyUser(user);
+              Address address = new Address("Vitoshka", 5);
+              int userAge = 22;
+              User user = new User(100L, "Georgi", userAge, address);
+              userManagementService.modifyUser(user, user.getId());
             })
         .isInstanceOf(UserNotFoundException.class)
         .hasMessage("User with that id does not exist");

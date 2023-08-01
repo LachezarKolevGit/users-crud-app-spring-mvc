@@ -46,4 +46,15 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+	
+	<error-page>
+	<error-code>400</error-code>
+	<location>/WEB-INF/views/illegal-argument-exception-page.jsp</location>
+	</error-page>
+	
+	<!-- <error-page>
+	<error-code>400</error-code>
+	<location>/WEB-INF/views/user-not-found-exception-page.jsp</location>
+	</error-page> -->
+	
 </web-app>
