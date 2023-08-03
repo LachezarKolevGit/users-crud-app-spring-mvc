@@ -7,6 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>modify user</h1>
+<h1>Enter id of user you want to modify</h1>
+<!-- 
+<input type="hidden" name="_method" value="DELETE"/><input type="submit" value="delete"></form></td>
+ -->
+
+		<form action="${pageContext.request.contextPath}/user" method="post">
+    		<input type="hidden" name="_method" value="put">
+    		<label>Id of user</label>
+    		<input type="number" name="id">
+    		<label>New name</label>
+    		<input type="text" name="name">
+    		<input type="submit" value="Submit">
+		</form>
 </body>
 </html>

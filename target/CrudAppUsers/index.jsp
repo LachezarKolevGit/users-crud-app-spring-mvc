@@ -10,11 +10,11 @@
 <br>
 <a href="${pageContext.request.contextPath}/user">Display users</a>
 <br>
-<a href="${pageContext.request.contextPath}/WEB-INF/views/user-create-page.jsp">Post user</a>
+<a href="${pageContext.request.contextPath}/create-user">Post user</a>
 <br>
-<a href="${pageContext.request.contextPath}/user-modify-page">Modify user</a>
+<a href="${pageContext.request.contextPath}/edit-user">Modify user</a>
 <br>
-<a href="${pageContext.request.contextPath}/user-delete-page">Delete user</a>
+<a href="${pageContext.request.contextPath}/delete-user">Delete user</a>
 <br>
 </body>
 </html>

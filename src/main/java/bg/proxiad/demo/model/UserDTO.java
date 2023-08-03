@@ -1,6 +1,8 @@
 package bg.proxiad.demo.model;
 
 import java.util.Optional;
+
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,18 +13,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
-public class UserDTO { // not sure if I dont need an no-args constructor
+public class UserDTO {
   @NotNull private Optional<Long> id;
-  @NotBlank private String name;
+  @NotBlank(message = "Name is required") private String name;
 
-  @Min(5)
-  @Max(100)
-  private int age;
+  @NotNull(message = "Age is required")
+  @Min(value = 5, message = "Min age is 5")
+  @Max(value = 100, message = "Age must not be above 100")
+  private Integer age;
 
-  @NotNull private Address address;
+  @Valid
+  @NotNull(message = "Address is required") private AddressDTO addressDTO;
 }

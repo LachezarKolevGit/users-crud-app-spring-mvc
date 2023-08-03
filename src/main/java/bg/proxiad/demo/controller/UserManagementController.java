@@ -1,6 +1,10 @@
 package bg.proxiad.demo.controller;
 
 import java.util.Map;
+import java.util.Optional;
+
+import bg.proxiad.demo.model.Address;
+import bg.proxiad.demo.model.AddressDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +40,20 @@ public class UserManagementController {
 
   @GetMapping("/user")
   public String printUsers(Model model) {
+    AddressDTO dto = new AddressDTO("Sofia", "Vitoshka" , 5);
+    AddressDTO dtoEmpty = new AddressDTO();
+    UserDTO userDTO = new UserDTO(Optional.of(1L), "Lachezar", 25, dtoEmpty);
+    User user = new User();
+    modelMapper.map(userDTO, user);
+    System.out.println("Mapped user is " + user);
+
+
+ /*   Address address = new Address();
+    //Address address = new Address("Sofia", "Vitoshka" , 5);
+    AddressDTO dto = new AddressDTO("Sofia", "Vitoshka" , 5);
+     modelMapper.map(dto, address);
+    System.out.println(address);*/
+
     Map<Long, User> users = userManagementService.getUsers();
     model.addAttribute("usersMap", users);
 
